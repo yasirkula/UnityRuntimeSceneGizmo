@@ -11,7 +11,7 @@ namespace RuntimeSceneGizmo
 	}
 
 	public class SceneGizmoRenderer : MonoBehaviour, IPointerClickHandler, IDragHandler
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL || UNITY_FACEBOOK || UNITY_WSA || UNITY_WSA_10_0
 		, IPointerEnterHandler, IPointerExitHandler
 #else
 		, IPointerDownHandler, IPointerUpHandler
@@ -82,7 +82,7 @@ namespace RuntimeSceneGizmo
 			return new Vector3( 1f + localPos.x / size.x, 1f + localPos.y / size.y, 0f );
 		}
 
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_STANDALONE || UNITY_WEBGL || UNITY_FACEBOOK || UNITY_WSA || UNITY_WSA_10_0
 		public void OnPointerEnter( PointerEventData eventData )
 		{
 			if( highlightHoveredComponents )
