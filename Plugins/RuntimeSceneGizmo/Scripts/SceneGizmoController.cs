@@ -49,7 +49,11 @@ namespace RuntimeSceneGizmo
 			gizmoCamera.eventMask = 0;
 			mainCamera.cullingMask = mainCamera.cullingMask & ~( 1 << GIZMOS_LAYER );
 			if( mainCamera.clearFlags == CameraClearFlags.Color )
-				gizmoCamera.backgroundColor = mainCamera.backgroundColor;
+			{
+				Color cameraBg = mainCamera.backgroundColor;
+				cameraBg.a = 0f;
+				gizmoCamera.backgroundColor = cameraBg;
+			}
 
 			gizmoCamera.enabled = true;
 
