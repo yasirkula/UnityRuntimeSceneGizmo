@@ -8,6 +8,7 @@ namespace RuntimeSceneGizmo
 	{
 		private const int GIZMOS_LAYER = 24;
 
+#pragma warning disable 0649
 		[SerializeField]
 		private Camera gizmoCamera;
 		private Transform gizmoCamParent;
@@ -18,6 +19,7 @@ namespace RuntimeSceneGizmo
 		[SerializeField]
 		private TextMesh[] labels;
 		private Transform[] labelsTR;
+#pragma warning restore 0649
 
 		private Camera mainCamera;
 		private Transform mainCamTR;

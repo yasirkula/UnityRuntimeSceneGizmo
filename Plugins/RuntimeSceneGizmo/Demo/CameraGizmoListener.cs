@@ -5,11 +5,13 @@ namespace RuntimeSceneGizmo
 {
 	public class CameraGizmoListener : MonoBehaviour
 	{
+#pragma warning disable 0649
 		[SerializeField]
 		private float cameraAdjustmentSpeed = 3f;
 
 		[SerializeField]
 		private float projectionTransitionSpeed = 2f;
+#pragma warning restore 0649
 
 		private Camera mainCamera;
 		private Transform mainCamParent;

@@ -17,6 +17,7 @@ namespace RuntimeSceneGizmo
 		, IPointerDownHandler, IPointerUpHandler
 #endif
 	{
+#pragma warning disable 0649
 		[SerializeField]
 		private RawImage imageHolder;
 		private RectTransform imageHolderTR;
@@ -32,6 +33,7 @@ namespace RuntimeSceneGizmo
 		[SerializeField]
 		private ComponentClickedEvent m_onComponentClicked;
 		public ComponentClickedEvent OnComponentClicked { get { return m_onComponentClicked; } }
+#pragma warning restore 0649
 
 		private void Awake()
 		{

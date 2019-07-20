@@ -4,8 +4,10 @@ namespace RuntimeSceneGizmo
 {
 	public class CameraMovement : MonoBehaviour
 	{
+#pragma warning disable 0649
 		[SerializeField]
 		private float sensitivity = 0.5f;
+#pragma warning restore 0649
 
 		private Vector3 prevMousePos;
 		private Transform mainCamParent;
