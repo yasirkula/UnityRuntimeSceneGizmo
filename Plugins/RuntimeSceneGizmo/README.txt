@@ -11,4 +11,6 @@ Simply add Plugins/RuntimeSceneGizmo/Prefabs/GizmoRenderer to your UI canvas and
 
 To invoke a function when a gizmo component is clicked, use the On Component Clicked event of the GizmoRenderer object. Functions registered to this event should ideally take a GizmoComponent parameter (which is defined in RuntimeSceneGizmo namespace).
 
+Gizmo's rotation will match the main camera's rotation but it is possible to change the reference object via *GizmoRenderer*'s **Reference Transform** property.
+
 See Plugins/RuntimeSceneGizmo/Demo/DemoScene for an example scene.

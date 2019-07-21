@@ -23,12 +23,25 @@ namespace RuntimeSceneGizmo
 		private RectTransform imageHolderTR;
 
 		[SerializeField]
-		private SceneGizmoController controllerPrefab;
 		private SceneGizmoController controller;
 
 		[SerializeField]
+		[Tooltip( "Should gizmo's hovered components turn yellow" )]
 		private bool highlightHoveredComponents = true;
 		private PointerEventData hoveringPointer;
+
+		[SerializeField]
+		[Tooltip( "(Optional) Gizmo will match the reference Transform's rotation" )]
+		private Transform m_referenceTransform;
+		public Transform ReferenceTransform
+		{
+			get { return m_referenceTransform; }
+			set
+			{
+				m_referenceTransform = value;
+				controller.ReferenceTransform = value;
+			}
+		}
 
 		[SerializeField]
 		private ComponentClickedEvent m_onComponentClicked;
@@ -38,9 +51,15 @@ namespace RuntimeSceneGizmo
 		private void Awake()
 		{
 			imageHolderTR = (RectTransform) imageHolder.transform;
-			controller = (SceneGizmoController) Instantiate( controllerPrefab );
+			controller = (SceneGizmoController) Instantiate( controller );
 
 			imageHolder.texture = controller.TargetTexture;
+		}
+
+		private void Start()
+		{
+			if( m_referenceTransform != null && !m_referenceTransform.Equals( null ) )
+				controller.ReferenceTransform = m_referenceTransform;
 		}
 
 		private void OnEnable()

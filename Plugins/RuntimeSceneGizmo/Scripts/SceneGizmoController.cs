@@ -21,8 +21,33 @@ namespace RuntimeSceneGizmo
 		private Transform[] labelsTR;
 #pragma warning restore 0649
 
-		private Camera mainCamera;
-		private Transform mainCamTR;
+		private Transform m_referenceTransform;
+		public Transform ReferenceTransform
+		{
+			get { return m_referenceTransform; }
+			set
+			{
+				if( value == null || value.Equals( null ) )
+					value = Camera.main.transform;
+
+				if( value != m_referenceTransform )
+				{
+					m_referenceTransform = value;
+
+					Camera referenceCamera = m_referenceTransform.GetComponent<Camera>();
+					if( referenceCamera != null )
+					{
+						referenceCamera.cullingMask = referenceCamera.cullingMask & ~( 1 << GIZMOS_LAYER );
+						if( referenceCamera.clearFlags == CameraClearFlags.Color )
+						{
+							Color cameraBg = referenceCamera.backgroundColor;
+							cameraBg.a = 0f;
+							gizmoCamera.backgroundColor = cameraBg;
+						}
+					}
+				}
+			}
+		}
 
 		private Vector3 prevForward;
 
@@ -34,12 +59,11 @@ namespace RuntimeSceneGizmo
 		private bool isFadingToZero;
 		private float fadeT = 1f;
 
+		private bool updateTargetTexture;
 		public RenderTexture TargetTexture { get; private set; }
 
 		private void Awake()
 		{
-			mainCamera = Camera.main;
-			mainCamTR = mainCamera.transform;
 			gizmoCamParent = gizmoCamera.transform.parent;
 			labelsTR = new Transform[labels.Length];
 
@@ -49,15 +73,7 @@ namespace RuntimeSceneGizmo
 			gizmoCamera.targetTexture = TargetTexture;
 			gizmoCamera.cullingMask = 1 << GIZMOS_LAYER;
 			gizmoCamera.eventMask = 0;
-			mainCamera.cullingMask = mainCamera.cullingMask & ~( 1 << GIZMOS_LAYER );
-			if( mainCamera.clearFlags == CameraClearFlags.Color )
-			{
-				Color cameraBg = mainCamera.backgroundColor;
-				cameraBg.a = 0f;
-				gizmoCamera.backgroundColor = cameraBg;
-			}
-
-			gizmoCamera.enabled = true;
+			gizmoCamera.enabled = false;
 
 			gizmoNormalMaterial = gizmoComponents[0].sharedMaterial;
 			gizmoFadeMaterial = new Material( gizmoNormalMaterial );
@@ -86,6 +102,7 @@ namespace RuntimeSceneGizmo
 			}
 
 			SetHiddenComponent( GizmoComponent.None );
+			updateTargetTexture = true;
 		}
 
 		private void OnDestroy()
@@ -99,7 +116,18 @@ namespace RuntimeSceneGizmo
 
 		private void LateUpdate()
 		{
-			Vector3 forward = mainCamTR.forward;
+			if( !m_referenceTransform )
+			{
+				ReferenceTransform = Camera.main.transform;
+
+				if( !m_referenceTransform )
+				{
+					Debug.LogError( "ReferenceTransform mustn't be null!" );
+					return;
+				}
+			}
+
+			Vector3 forward = m_referenceTransform.forward;
 			if( prevForward != forward )
 			{
 				float xAbs = forward.x < 0 ? -forward.x : forward.x;
@@ -140,7 +168,7 @@ namespace RuntimeSceneGizmo
 				else
 					SetHiddenComponent( GizmoComponent.None );
 
-				Quaternion rotation = mainCamTR.rotation;
+				Quaternion rotation = m_referenceTransform.rotation;
 				gizmoCamParent.localRotation = rotation;
 
 				// Adjust the labels
@@ -163,6 +191,7 @@ namespace RuntimeSceneGizmo
 				labelsTR[1].rotation = rotation;
 				labelsTR[2].rotation = rotation;
 
+				updateTargetTexture = true;
 				prevForward = forward;
 			}
 
@@ -186,6 +215,14 @@ namespace RuntimeSceneGizmo
 						gizmoComponents[(int) GetOppositeComponent( fadingComponent )].gameObject.SetActive( false );
 					}
 				}
+
+				updateTargetTexture = true;
+			}
+
+			if( updateTargetTexture )
+			{
+				gizmoCamera.Render();
+				updateTargetTexture = false;
 			}
 		}
 
@@ -223,12 +260,16 @@ namespace RuntimeSceneGizmo
 					}
 					else
 						highlightedComponent = GizmoComponent.None;
+
+					updateTargetTexture = true;
 				}
 			}
 			else if( highlightedComponent != GizmoComponent.None )
 			{
 				gizmoComponents[(int) highlightedComponent].sharedMaterial = gizmoNormalMaterial;
 				highlightedComponent = GizmoComponent.None;
+
+				updateTargetTexture = true;
 			}
 		}
 

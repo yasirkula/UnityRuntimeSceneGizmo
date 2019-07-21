@@ -70,8 +70,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   imageHolder: {fileID: 114500537324731862}
-  controllerPrefab: {fileID: 114490568713215462, guid: 2540e6c6fdb6c234891b3f071266d6dc,
+  controller: {fileID: 114490568713215462, guid: 2540e6c6fdb6c234891b3f071266d6dc,
     type: 2}
+  highlightHoveredComponents: 1
+  m_referenceTransform: {fileID: 0}
+  m_onComponentClicked:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: RuntimeSceneGizmo.ComponentClickedEvent, Assembly-CSharp-firstpass,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
 --- !u!114 &114500537324731862
 MonoBehaviour:
   m_ObjectHideFlags: 1

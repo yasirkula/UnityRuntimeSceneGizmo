@@ -12,6 +12,8 @@ Simply add **Plugins/RuntimeSceneGizmo/Prefabs/GizmoRenderer** to your UI canvas
 
 To invoke a function when a gizmo component is clicked, use the **On Component Clicked** event of the *GizmoRenderer* object. Functions registered to this event should ideally take a **GizmoComponent** parameter (which is defined in **RuntimeSceneGizmo** namespace).
 
+Gizmo's rotation will match the main camera's rotation but it is possible to change the reference object via *GizmoRenderer*'s **Reference Transform** property.
+
 GizmoRenderer will automatically create an instance of **SceneGizmo** prefab in your scene. SceneGizmo uses a camera to render the gizmo to a *RenderTexture*, which is then used by the GizmoRenderer to display the gizmo on the canvas. By default, SceneGizmo objects use layer 24 but this can be adjusted via *SceneGizmoController.GIZMOS_LAYER* constant.
 
 See **Plugins/RuntimeSceneGizmo/Demo/DemoScene** for an example scene.
