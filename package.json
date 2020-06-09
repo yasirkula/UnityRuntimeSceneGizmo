@@ -2,5 +2,6 @@
   "name": "com.yasirkula.runtimescenegizmo",
   "displayName": "Runtime Scene Gizmo",
   "version": "1.0.0",
-  "description": "This plugin helps you display a runtime scene gizmo as a UI element in your Unity projects. An event is raised when a component of the gizmo is clicked."
+  "description": "This plugin helps you display a runtime scene gizmo as a UI element in your Unity projects. An event is raised when a component of the gizmo is clicked.",
+  "hideInEditor": false
 }
