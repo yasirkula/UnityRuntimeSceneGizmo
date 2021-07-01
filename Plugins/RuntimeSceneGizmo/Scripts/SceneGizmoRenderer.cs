@@ -51,7 +51,7 @@ namespace RuntimeSceneGizmo
 		private void Awake()
 		{
 			imageHolderTR = (RectTransform) imageHolder.transform;
-			controller = (SceneGizmoController) Instantiate( controller );
+			controller = (SceneGizmoController) Instantiate( controller , transform );
 
 			imageHolder.texture = controller.TargetTexture;
 		}
