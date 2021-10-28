@@ -6,6 +6,8 @@
 
 **Forum Thread:** https://forum.unity.com/threads/runtime-scene-gizmo-for-ugui-open-source.540011/
 
+**Discord:** https://discord.gg/UJJt549AaV
+
 **[Support the Developer ☕](https://yasirkula.itch.io/unity3d)**
 
 This plugin helps you display a runtime scene gizmo as a UI element in your Unity projects. An event is raised when a component of the gizmo is clicked.
