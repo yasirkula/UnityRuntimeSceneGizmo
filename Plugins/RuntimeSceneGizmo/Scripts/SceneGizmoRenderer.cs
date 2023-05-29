@@ -98,7 +98,7 @@ namespace RuntimeSceneGizmo
 		{
 			Vector2 localPos;
 			Vector2 size = imageHolderTR.rect.size;
-			RectTransformUtility.ScreenPointToLocalPointInRectangle( imageHolderTR, eventData.position, null, out localPos );
+			RectTransformUtility.ScreenPointToLocalPointInRectangle( imageHolderTR, eventData.position, eventData.enterEventCamera, out localPos );
 
 			return new Vector3( 1f + localPos.x / size.x, 1f + localPos.y / size.y, 0f );
 		}

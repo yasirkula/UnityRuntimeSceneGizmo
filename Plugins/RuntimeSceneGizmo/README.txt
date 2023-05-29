@@ -1,4 +1,4 @@
-= Runtime Scene Gizmo =
+= Runtime Scene Gizmo (v1.0.1) =
 
 Online documentation available at: https://github.com/yasirkula/UnityRuntimeSceneGizmo
 E-mail: yasirkula@gmail.com
